@@ -6,6 +6,12 @@ def home(request):
     clienteslistados = Cliente.objects.all()
     return render(request,"index.html",{"clientes":clienteslistados})
 
+# ----- clientes -----
+
+def cliente(request):
+    clienteslistados = Cliente.objects.all()
+    return render(request,"clientes.html",{"clientes":clienteslistados})
+
 def registrarCliente(request):
     codigo=request.POST['txtCodigo']
     nombre=request.POST['txtNombre']
@@ -26,14 +32,81 @@ def editarCliente(request):
     email=request.POST['txtEmail']
     auto=request.POST['txtAuto']
     cliente= Cliente.objects.get(codigo=codigo)
-    Cliente.nombre=nombre
-    Cliente.apellido=apellido
-    Cliente.email=email
-    Cliente.auto=auto
-    Cliente.save()
+    cliente.nombre=nombre
+    cliente.apellido=apellido
+    cliente.email=email
+    cliente.auto=auto
+    cliente.save()
     return redirect('/')
 
 def eliminarCliente(request, codigo):
     cliente= Cliente.objects.get(codigo=codigo)
     cliente.delete()
+    return redirect('/')
+
+# ----- operarios -----
+
+def operario(request):
+    operarioslistados = Operario.objects.all()
+    return render(request,"operarios.html",{"operario":operarioslistados})
+
+def registrarOperario(request):
+    codigo=request.POST['txtCodigo']
+    nombre=request.POST['txtNombre']
+    apellido=request.POST['txtApellido']
+    email=request.POST['txtEmail']
+    profesion=request.POST['txtProfesion']
+    operario = Operario.objects.create(codigo=codigo, nombre=nombre, apellido=apellido, email=email, profesion=profesion)
+    return redirect('/')
+
+def edicionOperario(request, codigo):
+    operario= Operario.objects.get(codigo=codigo)
+    return render(request, "edicionoperario.html",{"operario":operario})
+
+def editarOperario(request):
+    codigo=request.POST['txtCodigo']
+    nombre=request.POST['txtNombre']
+    apellido=request.POST['txtApellido']
+    email=request.POST['txtEmail']
+    profesion=request.POST['txtProfesion']
+    operario= Operario.objects.get(codigo=codigo)
+    operario.nombre=nombre
+    operario.apellido=apellido
+    operario.email=email
+    operario.profesion=profesion
+    operario.save()
+    return redirect('/')
+
+def eliminarOperario(request, codigo):
+    operario= Operario.objects.get(codigo=codigo)
+    operario.delete()
+    return redirect('/')
+
+# ----- mantenimientos -----
+
+def mantenimiento(request):
+    mantenimientoslistados = Mantenimiento.objects.all()
+    return render(request,"mantenimientos.html",{"mantenimiento":mantenimientoslistados})
+
+def registrarMantenimiento(request):
+    codigo=request.POST['txtCodigo']
+    nombre=request.POST['txtNombre']
+    mantenimiento = Mantenimiento.objects.create(codigo=codigo, nombre=nombre)
+    return redirect('/')
+
+def edicionMantenimiento(request, codigo):
+    mantenimiento= Mantenimiento.objects.get(codigo=codigo)
+    return render(request, "edicionmantenimiento.html",{"mantenimiento":mantenimiento})
+
+def editarMantenimiento(request):
+    codigo=request.POST['txtCodigo']
+    nombre=request.POST['txtNombre']
+    mantenimiento= Mantenimiento.objects.get(codigo=codigo)
+    mantenimiento.nombre=nombre
+    mantenimiento.save()
+    return redirect('/')
+
+def eliminarMantenimiento(request, codigo):
+    mantenimiento= Mantenimiento.objects.get(codigo=codigo)
+    mantenimiento.delete()
     return redirect('/')
