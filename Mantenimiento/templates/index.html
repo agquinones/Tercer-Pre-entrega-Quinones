@@ -8,17 +8,17 @@
         <h2>Buscar Cliente</h2>
         <div class="card">
             <div class="card-body">
-                <form action="/registrarcliente/" method="POST">{% csrf_token %}
+                <form action="/buscarcliente/" method="GET">{% csrf_token %}
                     <div class="form-group py-2">
-                        <input type="text" id="txtCodigo" name="txtCodigo" class="form-control" placeholder="codigo" minlength="6" maxlength="6"required>
+                        <input type="text" id="txtCodigo" name="txtCodigo" class="form-control" placeholder="Codigo" maxlength="6"required>
                     </div>
-                    <button type="submit" class="btn btn-info btn-block text-white">Guardar</button>
+                    <button type="submit" class="btn btn-block btn-info text-white">Buscar</button>
                 </form>
             </div>
         </div>
     </div>
     <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
-        <h1>Listado de clientes</h1>
+        <h1>Resultado de busqueda</h1>
         <div class="table-responsive py-2">
             <table class="table table-striped">
                 <thead>

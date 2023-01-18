@@ -2,9 +2,16 @@ from django.shortcuts import render, redirect
 from .models import Cliente,Operario,Mantenimiento
 
 # Create your views here.
+
 def home(request):
+    return render(request,"index.html")
+
+def buscarcliente(request):
+    busqueda = request.GET.get('txtCodigo')
     clienteslistados = Cliente.objects.all()
-    return render(request,"index.html",{"clientes":clienteslistados})
+    if busqueda:
+        clienteslistados = Cliente.objects.filter(codigo__icontains = busqueda)
+    return render(request, 'index.html',{'clientes':clienteslistados})
 
 # ----- clientes -----
 
@@ -19,7 +26,7 @@ def registrarCliente(request):
     email=request.POST['txtEmail']
     auto=request.POST['txtAuto']
     cliente = Cliente.objects.create(codigo=codigo, nombre=nombre, apellido=apellido, email=email, auto=auto)
-    return redirect('/')
+    return redirect('/cliente/')
 
 def edicionCliente(request, codigo):
     cliente= Cliente.objects.get(codigo=codigo)
@@ -37,12 +44,12 @@ def editarCliente(request):
     cliente.email=email
     cliente.auto=auto
     cliente.save()
-    return redirect('/')
+    return redirect('/cliente/')
 
 def eliminarCliente(request, codigo):
     cliente= Cliente.objects.get(codigo=codigo)
     cliente.delete()
-    return redirect('/')
+    return redirect('/cliente/')
 
 # ----- operarios -----
 
@@ -57,7 +64,7 @@ def registrarOperario(request):
     email=request.POST['txtEmail']
     profesion=request.POST['txtProfesion']
     operario = Operario.objects.create(codigo=codigo, nombre=nombre, apellido=apellido, email=email, profesion=profesion)
-    return redirect('/')
+    return redirect('/operario/')
 
 def edicionOperario(request, codigo):
     operario= Operario.objects.get(codigo=codigo)
@@ -75,12 +82,12 @@ def editarOperario(request):
     operario.email=email
     operario.profesion=profesion
     operario.save()
-    return redirect('/')
+    return redirect('/operario/')
 
 def eliminarOperario(request, codigo):
     operario= Operario.objects.get(codigo=codigo)
     operario.delete()
-    return redirect('/')
+    return redirect('/operario/')
 
 # ----- mantenimientos -----
 
@@ -92,7 +99,7 @@ def registrarMantenimiento(request):
     codigo=request.POST['txtCodigo']
     nombre=request.POST['txtNombre']
     mantenimiento = Mantenimiento.objects.create(codigo=codigo, nombre=nombre)
-    return redirect('/')
+    return redirect('/mantenimiento/')
 
 def edicionMantenimiento(request, codigo):
     mantenimiento= Mantenimiento.objects.get(codigo=codigo)
@@ -104,9 +111,9 @@ def editarMantenimiento(request):
     mantenimiento= Mantenimiento.objects.get(codigo=codigo)
     mantenimiento.nombre=nombre
     mantenimiento.save()
-    return redirect('/')
+    return redirect('/mantenimiento/')
 
 def eliminarMantenimiento(request, codigo):
     mantenimiento= Mantenimiento.objects.get(codigo=codigo)
     mantenimiento.delete()
-    return redirect('/')
+    return redirect('/mantenimiento/')
